@@ -16,7 +16,7 @@ raw: A field should be required
 
 func TestFailedTemplateValidatorWhenOk(t *testing.T) {
 	manifest := makeManifest(failedTemplate)
-	validator := FailedTemplateValidator{"A field should be required"}
+	validator := FailedTemplateValidator{ErrorMessage: "A field should be required"}
 
 	pass, diff := validator.Validate(&ValidateContext{
 		Docs: []common.K8sManifest{manifest},
@@ -29,7 +29,7 @@ func TestFailedTemplateValidatorWhenOk(t *testing.T) {
 func TestFailedTemplateValidatorWhenNegativeAndOk(t *testing.T) {
 	manifest := makeManifest(failedTemplate)
 
-	validator := FailedTemplateValidator{"A field should not be required"}
+	validator := FailedTemplateValidator{ErrorMessage: "A field should not be required"}
 	pass, diff := validator.Validate(&ValidateContext{
 		Docs:     []common.K8sManifest{manifest},
 		Negative: true,
@@ -40,7 +40,7 @@ func TestFailedTemplateValidatorWhenNegativeAndOk(t *testing.T) {
 }
 
 func TestFailedTemplateValidatorWhenEmptyFail(t *testing.T) {
-	validator := FailedTemplateValidator{"A field should not be required"}
+	validator := FailedTemplateValidator{ErrorMessage: "A field should not be required"}
 	pass, diff := validator.Validate(&ValidateContext{
 		Docs:     []common.K8sManifest{},
 		Negative: false,
@@ -57,7 +57,7 @@ func TestFailedTemplateValidatorWhenEmptyFail(t *testing.T) {
 }
 
 func TestFailedTemplateValidatorWhenEmptyNegativeAndOk(t *testing.T) {
-	validator := FailedTemplateValidator{"A field should not be required"}
+	validator := FailedTemplateValidator{ErrorMessage: "A field should not be required"}
 	pass, diff := validator.Validate(&ValidateContext{
 		Docs:     []common.K8sManifest{},
 		Negative: true,
@@ -73,7 +73,7 @@ func TestFailedTemplateValidatorWhenFail(t *testing.T) {
 
 	log.SetLevel(log.DebugLevel)
 
-	validator := FailedTemplateValidator{"A field should not be required"}
+	validator := FailedTemplateValidator{ErrorMessage: "A field should not be required"}
 	pass, diff := validator.Validate(&ValidateContext{
 		Docs: []common.K8sManifest{manifest},
 	})
@@ -91,7 +91,7 @@ func TestFailedTemplateValidatorWhenFail(t *testing.T) {
 func TestFailedTemplateValidatorWhenNegativeAndFail(t *testing.T) {
 	manifest := makeManifest(failedTemplate)
 
-	v := FailedTemplateValidator{"A field should be required"}
+	v := FailedTemplateValidator{ErrorMessage: "A field should be required"}
 	pass, diff := v.Validate(&ValidateContext{
 		Docs:     []common.K8sManifest{manifest},
 		Negative: true,
@@ -107,7 +107,7 @@ func TestFailedTemplateValidatorWhenNegativeAndFail(t *testing.T) {
 
 func TestFailedTemplateValidatorWhenInvalidIndex(t *testing.T) {
 	manifest := makeManifest(failedTemplate)
-	validator := FailedTemplateValidator{"A field should be required"}
+	validator := FailedTemplateValidator{ErrorMessage: "A field should be required"}
 	pass, diff := validator.Validate(&ValidateContext{
 		Docs:  []common.K8sManifest{manifest},
 		Index: 2,
@@ -121,7 +121,7 @@ func TestFailedTemplateValidatorWhenInvalidIndex(t *testing.T) {
 }
 
 func TestFailedTemplateValidatorWhenRenderError(t *testing.T) {
-	validator := FailedTemplateValidator{"values don't meet the specifications of the schema(s)"}
+	validator := FailedTemplateValidator{ErrorMessage: "values don't meet the specifications of the schema(s)"}
 	pass, diff := validator.Validate(&ValidateContext{
 		Docs:        []common.K8sManifest{},
 		Index:       -1,

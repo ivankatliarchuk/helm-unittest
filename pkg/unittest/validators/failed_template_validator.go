@@ -11,7 +11,9 @@ import (
 
 // FailedTemplateValidator validate whether the errorMessage equal to errorMessage
 type FailedTemplateValidator struct {
-	ErrorMessage string
+	ErrorMessage      string
+	Contains          string
+	MatchRegexPattern string
 }
 
 func (a FailedTemplateValidator) failInfo(actual interface{}, index int, not bool) []string {
