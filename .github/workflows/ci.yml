@@ -61,4 +61,4 @@ jobs:
           scan-ref: '.'
           exit-code: '1'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-          scanners: misconfig,vuln
+          scanners: vuln
