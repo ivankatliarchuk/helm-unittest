@@ -60,5 +60,20 @@ jobs:
           ignore-unfixed: true
           scan-ref: '.'
           exit-code: '1'
-          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-          scanners: vuln
+          severity: 'HIGH,CRITICAL'
+          scanners: vuln,secret
+
+      - name: build
+        shell: bash
+        run: go build -o untt ./cmd/helm-unittest
+
+      - name: run trivy vulnerability scanner in fs mode
+        # https://github.com/aquasecurity/trivy-action
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          scan-ref: './untt'
+          exit-code: '1'
+          severity: 'HIGH,CRITICAL'
+          scanners: vuln,secret
