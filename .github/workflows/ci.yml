@@ -16,6 +16,7 @@ env:
 jobs:
 
   lint:
+    name: lint
     runs-on: ubuntu-latest
 
     steps:
@@ -25,20 +26,22 @@ jobs:
         with:
           fetch-depth: 1
 
-    - name: setup go
-      # https://github.com/actions/setup-go
-      uses: actions/setup-go@v5
-      with:
-        go-version: ${{ env.GO_VERSION }}
+      - name: setup go
+        # https://github.com/actions/setup-go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
 
-    - name: lint
-      # https://github.com/golangci/golangci-lint-action
-      uses: golangci/golangci-lint-action@v3
-      with:
-        version: ${{ env.GOLANGCI_VERSION }}
+      - name: lint
+        # https://github.com/golangci/golangci-lint-action
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: ${{ env.GOLANGCI_VERSION }}
 
   vulnerability-scan-fs:
-    runs-on: ubuntu-22.04
+    name: vulnerability scan
+    runs-on: ubuntu-latest
+
     steps:
       - name: checkout
         uses: actions/checkout@v4
